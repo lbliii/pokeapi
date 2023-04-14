@@ -119,7 +119,13 @@ class PokeAPI:
                     backupVersion = keyList[0]
                     path = sprites['versions'][generation][backupVersion]
 
-                    if generation == 'generation-i' or 'generation-ii' or 'generation-iii':
+                    if generation == 'generation-i': 
+                        if position == 'back':
+                            return path.get('back_default')
+                        else:
+                            return path.get('front_default')
+
+                    if generation == 'generation-ii' or generation == 'generation-iii':
                         if shiny and position == 'back':
                             sprite_url = path.get('back_shiny')
                         elif shiny and position == 'front':
@@ -140,27 +146,24 @@ class PokeAPI:
                 case(shiny, gender, position, generation, version):
                     path = sprites['versions'][generation][version]
 
-                    if shiny and generation == 'generation-i':
-                        if position == 'back':
+                    if generation == 'generation-i':
+                        if  position == 'back':
                             sprite_url = path.get('back_default')
-                        elif position == 'front':
-                            sprite_url = path.get('front_default')
-                    elif not shiny and generation == 'generation-i':
-                        if position == 'back':
-                            sprite_url = path.get('back_default')
+                            
                         else:
                             sprite_url = path.get('front_default')
 
-                    if generation == 'generation-ii' or 'generation-iii':
+                    elif generation == 'generation-ii' or generation == 'generation-iii':
                         path = sprites['versions'][generation][version]
+                        
                         if shiny and position == 'back':
                             sprite_url = path.get('back_shiny')
                         elif shiny and position == 'front':
                             sprite_url = path.get('front_shiny')
                         else:
                             sprite_url = path.get('front_default')
+                    
                     else:
-
                         if shiny and gender == 'female' and position == 'back':
                             sprite_url = path.get('back_shiny_female')
                         if shiny and gender == 'female' and position == 'front':
@@ -189,9 +192,9 @@ pdx = PokeAPI()
 pikachu = pdx.get_sprite('pikachu',
     shiny=True,
     gender="male",
-    position="front",
-    generation="generation-ii",
-    # version="yellow"
+    position="back",
+    generation="generation-i",
+    version="yellow"
     )
 
 print(pikachu)
